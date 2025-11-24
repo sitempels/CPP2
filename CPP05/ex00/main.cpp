@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 07:40:00 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/24 08:29:12 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/24 09:14:33 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,20 @@
 
 int main(void) {
 	std::cout << "\nTest ex00\n" << std::endl;
-
+/*	std::cout << "\nClass test\n" << std::endl;
+	Bureaucrat	test1("Timothe", 2);
+	{
+		Bureaucrat	test2;
+		test2 = test1;
+		Bureaucrat	test3(test1);
+		
+	}
+	std::cout << test1;
+*/
 	std::cout << "Highest grade possible: " << HIGHEST_GRADE << std::endl;
 	std::cout << "Lowest grade possible: " << LOWEST_GRADE << std::endl;
 
-	std::cout << "\nTest too high and too low creation" << std::endl;
+	std::cout << "\nTest too high and too low creation:\n" << std::endl;
 	try {
 		Bureaucrat Sleeper1("Bern", 1500);
 	}
@@ -33,7 +42,7 @@ int main(void) {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 	}
 
-	std::cout << "\nTest increasing\n" << std::endl;
+	std::cout << "\nTest increasing:\n" << std::endl;
 	Bureaucrat bob("Bob", 2);
 	std::cout << bob;
 	try {
@@ -54,7 +63,7 @@ int main(void) {
 
 
 
-	std::cout << "\nTest decreasing\n" << std::endl;
+	std::cout << "\nTest decreasing:\n" << std::endl;
 	Bureaucrat tim("Tim", 149);
 	std::cout << tim;
 	try {
@@ -72,6 +81,7 @@ int main(void) {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 	}
 	std::cout << tim;
+	std::cout << "\n";
 	
 	return (0);
 }

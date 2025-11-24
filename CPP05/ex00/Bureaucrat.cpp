@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 07:37:33 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/24 08:03:06 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/24 09:11:34 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,31 @@
 
 /*Constructor*/
 Bureaucrat::Bureaucrat(std::string name, int new_grade) : name(name) {
-		if (grade > LOWEST_GRADE)
+		if (new_grade > LOWEST_GRADE)
 			throw (gradeTooLowException());
-		else if (grade < HIGHEST_GRADE)
+		else if (new_grade < HIGHEST_GRADE)
 			throw (gradeTooHighException());
-		grade = new_grade;
-		std::cout << *this;
+		else {
+			grade = new_grade;
+			std::cout << "Constructor hired: " << *this;
+		}
 }
 
 /*Copy Constructor*/
-Bureaucrat::Bureaucrat(const Bureaucrat& copy_from) : name(copy_from.name), grade(copy_from.grade) {}
+Bureaucrat::Bureaucrat(const Bureaucrat& copy_from) : name(copy_from.name), grade(copy_from.grade) {
+			std::cout << "Copy constructor hired: " << *this;
+}
 
 /*Destructor*/
-Bureaucrat::~Bureaucrat() {}
+Bureaucrat::~Bureaucrat() {
+	std::cout << "Destructor fired: " << *this;
+}
 
 /*Overloaded Operators*/
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {
-	if (this != &other)
+	if (this != &other) {
 		grade = other.grade;
+	}
 	return (*this);
 }
 
