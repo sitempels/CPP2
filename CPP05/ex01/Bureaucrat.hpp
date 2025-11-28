@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 06:27:39 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/24 08:23:53 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 08:49:22 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@
 # include <iostream>
 # include <string>
 # include <exception>
+# include "Form.hpp"
 
 /*Macros*/
 # define LOWEST_GRADE 150
 # define HIGHEST_GRADE 1
+
+class	Form ;
 
 class	Bureaucrat {
 	public:
@@ -35,6 +38,7 @@ class	Bureaucrat {
 		/*Public methods*/
 		void	incrementGrade() ;
 		void	decrementGrade() ;
+		void	signForm(Form& form_to_sign) ;
 
 		/*Exceptions*/
 		class	gradeTooLowException : public std::exception {

@@ -6,11 +6,12 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 07:40:00 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/24 09:14:33 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 09:33:36 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 int main(void) {
 	std::cout << "\nTest ex00\n" << std::endl;
@@ -82,6 +83,37 @@ int main(void) {
 	}
 	std::cout << tim;
 	std::cout << "\n";
+
+	std::cout << std::endl << "Test ex01\n" << std::endl;
+
+	try {
+		Form ex1_form("EXEMPLE1 FORM", 100, 0);
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+	}
+	try {
+		Form ex2_form("EXEMPLE2 FORM", 151, 1);
+	}
+	catch (const std::exception& e) {
+		std::cerr << "Exception caught: " << e.what() << std::endl;
+	}
+	Form id_form("ID FORM", 100, 90);
+	std::cout << std::endl;
+	Bureaucrat mr_slow;
+	std::cout << std::endl;
+	Bureaucrat mr_id("MR_ID", 100);
+	std::cout << std::endl;
+	std::cout << id_form;
+	std::cout << std::endl;
+	mr_slow.signForm(id_form);
+	std::cout << std::endl;
+	std::cout << id_form;
+	std::cout << std::endl;
+	mr_id.signForm(id_form);
+	std::cout << std::endl;
+	std::cout << id_form;
+	std::cout << std::endl;
 	
 	return (0);
 }

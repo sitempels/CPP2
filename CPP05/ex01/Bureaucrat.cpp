@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 07:37:33 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/24 09:11:34 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 08:56:52 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,18 @@ void	Bureaucrat::decrementGrade() {
 		throw gradeTooLowException();
 	else
 		grade++;
+	return ;
+}
+
+void	Bureaucrat::signForm(Form& form_to_sign) {
+	try {
+		form_to_sign.beSigned(*this);
+	}
+	catch (const std::exception& e) {
+		std::cout << name << " couldn't sign " << form_to_sign.getName() << " because " << e.what() << std::endl;
+		return ;
+	}
+	std::cout << name << " signed " << form_to_sign.getName() << std::endl;
 	return ;
 }
 

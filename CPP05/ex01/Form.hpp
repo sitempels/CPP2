@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:55:46 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/25 11:25:12 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 08:49:37 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <string>
 # include <exception>
 # include "Bureaucrat.hpp"
+
+class	Bureaucrat ;
 
 class	Form {
 	public:
@@ -60,48 +62,3 @@ class	Form {
 std::ostream& operator<<(std::ostream& o_stream, const Form& other) ;
 
 #endif
-
-#include "Bureaucrat.hpp"
-
-Form::Form(std::string name, int sign_grade, int execute_grade)
-		if (new_grade > LOWEST_GRADE)
-			throw (gradeTooLowException());
-		else if (new_grade < HIGHEST_GRADE)
-			throw (gradeTooHighException());
-		else {
-			grade = new_grade;
-			std::cout << "Constructor: Form: " << *this;
-		}
-}
-
-/*Copy Constructor*/
-Form::Form(const Form& copy_from) : name(copy_from.name), grade(copy_from.grade) {
-			std::cout << "Copy constructor: Form: " << *this;
-}
-
-/*Destructor*/
-Form::~Form() {
-	std::cout << "Destructor: Form: " << *this;
-}
-
-/*Overloaded Operators*/
-Form& Form::operator=(const Form& other) {
-	if (this != &other) {
-		grade = other.grade;
-	}
-	return (*this);
-}
-
-std::ostream& operator<<(std::ostream& o_stream, const Form& other) {
-	o_stream << "Form: " << other.getName() << "\n";
-		<< "Status: ";
-	if (getStatus)
-		<< "signed\n";
-	else
-		<< "unsigned\n";
-	<< "Grade required to sign: " << getSignGrade() << "\n";
-	<< "Grade required to execute: " << getExecuteGrade();
-	<< std::endl;
-	return (o_stream);
-}
-
