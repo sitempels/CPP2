@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:48:56 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 13:36:17 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:01:40 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Constructor - Copy Constructor - Destructor*/
 PresidentialPardonForm::PresidentialPardonForm(std::string target)
-	: 	AForm("PresidentialPardon", 72, 45),
+	: 	AForm("PresidentialPardon", 25, 5),
 		target(target) {
 
 	std::cout << "Constructor called: PresidentialPardonForm" << std::endl;
@@ -40,6 +40,10 @@ PresidentialPardonForm&	PresidentialPardonForm::operator=(const PresidentialPard
 }
 
 /*Public method*/
-void	PresidentialPardonForm::doAction() const {
-	std::cout << target << " has been pardonned by Zaphod Beeblebrox" << std::endl;
+std::string	PresidentialPardonForm::execute(Bureaucrat const & executor) const {
+	if (getStatus() == false)
+		throw (isNotSignedException());
+	if (getExecuteGrade() < executor.getGrade())
+		throw (gradeTooLowException());
+	return (target + " has been pardonned by Zaphod Beeblebrox");
 }

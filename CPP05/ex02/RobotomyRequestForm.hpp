@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 12:47:14 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 13:48:14 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:04:24 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 
 # include <iostream>
 # include <string>
-# include <exception>
 # include <fstream>
 # include <stdlib.h>
-//# include <time.h>
 # include "AForm.hpp"
 
 class RobotomyRequestForm : virtual public AForm {
@@ -32,13 +30,7 @@ class RobotomyRequestForm : virtual public AForm {
 		RobotomyRequestForm&	operator=(const RobotomyRequestForm& other);
 
 		/*Public method*/
-		void	doAction() const;
-
-		/*Exception*/
-		class	RobotomizationFailed : public std::exception {
-			public:
-				virtual const char*	what() const throw() ;
-		};
+		std::string	execute(Bureaucrat const & executor) const ;
 
 	private:
 		const std::string	target;

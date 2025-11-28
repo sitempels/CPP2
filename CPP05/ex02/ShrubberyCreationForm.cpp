@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:58:49 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 13:18:42 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:04:03 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,11 @@ ShrubberyCreationForm&	ShrubberyCreationForm::operator=(const ShrubberyCreationF
 }
 
 /*Public method*/
-void	ShrubberyCreationForm::doAction() const {
+std::string	ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
+	if (getStatus() == false)
+		throw (isNotSignedException());
+	if (getExecuteGrade() < executor.getGrade())
+		throw (gradeTooLowException());
 	std::ofstream out_file((target + std::string("_shrubbery")).c_str());
 	if (out_file) {
 		out_file << "    /\\    \n";
@@ -53,6 +57,7 @@ void	ShrubberyCreationForm::doAction() const {
 		out_file << "    ||    \n";
 
 		out_file.close();
+		return ("Tree draw successfully !");
 	}
 	else
 		throw (OpenFileException());

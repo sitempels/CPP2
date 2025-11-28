@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 10:53:44 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 12:45:42 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:04:15 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class PresidentialPardonForm : virtual public AForm {
 		PresidentialPardonForm&	operator=(const PresidentialPardonForm& other);
 
 		/*Public method*/
-		void	doAction() const;
+		std::string	execute(Bureaucrat const & executor) const ;
 
 	private:
 		const std::string	target;

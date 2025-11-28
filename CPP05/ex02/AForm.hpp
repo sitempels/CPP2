@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:55:46 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 13:13:29 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:04:47 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ class	AForm {
 		AForm&	operator=(const AForm& other) ;
 
 		/*Public Method*/
-		void	beSigned(const Bureaucrat& bureaucrat) ;
-		void	execute(Bureaucrat const & executor) const ;
+		void			beSigned(const Bureaucrat& bureaucrat) ;
+		virtual std::string	execute(Bureaucrat const & executor) const = 0;
 
 		/*Exceptions*/
 		class	gradeTooLowException : public std::exception {
@@ -63,10 +63,6 @@ class	AForm {
 		bool				sign;
 		const int			sign_grade;
 		const int			execute_grade;
-
-	protected:
-		/*Protected Method*/
-		virtual void	doAction() const = 0 ;
 };
 
 std::ostream& operator<<(std::ostream& o_stream, const AForm& other) ;

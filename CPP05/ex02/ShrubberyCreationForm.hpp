@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 10:53:44 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 12:00:15 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:04:34 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class ShrubberyCreationForm : virtual public AForm {
 		ShrubberyCreationForm&	operator=(const ShrubberyCreationForm& other);
 
 		/*Public method*/
-		void	doAction() const;
+		std::string	execute(Bureaucrat const & executor) const ;
 
 		/*Exception*/
 		class	OpenFileException : public std::exception {

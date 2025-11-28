@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 11:58:49 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 13:31:00 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:03:12 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,14 @@ RobotomyRequestForm&	RobotomyRequestForm::operator=(const RobotomyRequestForm& o
 }
 
 /*Public method*/
-void	RobotomyRequestForm::doAction() const {
+std::string	RobotomyRequestForm::execute(Bureaucrat const & executor) const {
+	if (getStatus() == false)
+		throw (isNotSignedException());
+	if (getExecuteGrade() < executor.getGrade())
+		throw (gradeTooLowException());
 	int	random_number = rand() % 2;
 	if (random_number == 1)
-		std::cout << "Schhhlack ! " << target << " has been robotomized." << std::endl;
+		return ("Schhhlack ! " + target + " has been robotomized.");
 	else
-		throw (RobotomizationFailed());
-}
-
-/*Exception*/
-const char *RobotomyRequestForm::RobotomizationFailed::what() const throw() {
-	return ("Could not be robotomized");
+		return ("Sch...clang ! " + target + " robotomization failed.");
 }

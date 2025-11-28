@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 12:54:47 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 13:54:00 by stempels         ###   ########.fr       */
+/*   Updated: 2025/11/28 16:38:46 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,17 @@ void	AForm::beSigned(const Bureaucrat& bureaucrat) {
 	return ;
 }
 
-void	AForm::execute(Bureaucrat const & executor) const {
-	if (sign == false)
-		throw (isNotSignedException());
-	if (execute_grade < executor.getGrade())
-		throw (gradeTooLowException());
-	doAction();
-}
-
 /*Exceptions*/
 const char*	AForm::gradeTooLowException::what() const throw() {
-	return ("Form grade too low");
+	return ("grade is too low");
 }
 
 const char*	AForm::gradeTooHighException::what() const throw() {
-	return ("Form grade too high");
+	return ("grade is too high");
 }
 
 const char*	AForm::isNotSignedException::what() const throw() {
-	return ("Form isn't signed");
+	return ("form isn't signed");
 }
 
 /*Getters*/
