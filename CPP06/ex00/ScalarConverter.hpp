@@ -3,26 +3,24 @@
 # define	SCALARCONVERTER_HPP
 
 /*Includes*/
+# include <string>
+# include <iostream>
+# include <iomanip>
+# include <sstream>
 
 class	ScalarConverter {
 	public:
-	/*Constructor - Copy Constructor - Destructor*/
-		ScalarConverter() = delete;
-		ScalarConverter(const ScalarConverter& copy_from) = delete;
-		~ScalarConverter() = delete;
-
-	/*Overloaded Operator*/
-		ScalarConverter&	operator=(const ScalarConverter& other) = delete;
-
 	/*Public Method*/
 		static void	convert(const std::string literal) ;
+
+	private:
+	/*Constructor - Copy Constructor - Destructor*/
+		ScalarConverter();
+		ScalarConverter(const ScalarConverter& copy_from);
+		~ScalarConverter();
+
+	/*Overloaded Operator*/
+		ScalarConverter&	operator=(const ScalarConverter& other);
 };
 
 #endif
-
-
-#include "ScalarConverter.hpp"
-
-void	ScalarConverter::convert(const std::string literal) {
-	
-}
