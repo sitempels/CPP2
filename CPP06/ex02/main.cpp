@@ -1,51 +1,31 @@
-#ifndef BASE_CLASS_HPP
-# define BASE_CLASS_HPP
-
-# include <iostream>
-
-class Base
-{
-	public:
-		virtual ~Base(void);
-};
-
-class A : public Base {};
-class B : public Base {};
-class C : public Base {};
-
-#endif
-
-#include "Base.class.hpp"
-
-Base::~Base() {
-	std::cout << "Destructor Base called" << std::endl;
-}
 
 #include <iostream>
-#include "Base.class.hpp"
+#include <ctime>
+#include <cstdlib>
+#include "Base.hpp"
 
 class Wrong : public Base {};
 
-// Generates a random instance of class A, B or C.
 Base *generate() {
-	// Random number between 0 and 2.
 	std::srand(std::time(NULL));
 	int random = std::rand() % 3;
 
-	std::cout << "Random: " << random << std::endl;
+	std::cout << "Random: ";
 	switch (random) {
 		case 0:
+			std::cout << "A was chosen" <<std::endl;
 			return new A();
 		case 1:
+			std::cout << "B was chosen" <<std::endl;
 			return new B();
 		case 2:
+			std::cout << "C was chosen" <<std::endl;
 			return new C();
 		default:
 			return new A();;
 	}
 }
 
-// Displays the type of the instance passed as parameter (with a pointer).
 void identify(Base *p) {
 	if (dynamic_cast<A *>(p)) {
 		std::cout << "Type: A" << std::endl;
@@ -62,7 +42,6 @@ void identify(Base *p) {
 	std::cout << "Type: Unknown" << std::endl;
 }
 
-// Displays the type of the instance passed as parameter (with a reference).
 void identify(Base &p) {
 
 	try {
@@ -89,18 +68,16 @@ void identify(Base &p) {
 int main() {
 	std::cout << "--- Test with random instance ---" << std::endl;
 
-	Base *base = generate(); // Generate random instance of class A, B or C.
-	identify(base); // Identify the type of the instance (with a pointer).
-	identify(*base); // Identify the type of the instance (with a reference).
+	Base *base = generate();
+	identify(base);
+	identify(*base);
 	delete base;
 
-	// Test with Wrong.
 	std::cout << std::endl << "--- Test with Wrong ---" << std::endl;
 	Wrong wrong;
 	identify(&wrong);
 	identify(wrong);
 
-	// Test with NULL.
 	std::cout << std::endl << "--- Test with NULL ---" << std::endl;
 	Base *null = NULL;
 	identify(null);
