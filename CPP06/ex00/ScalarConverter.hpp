@@ -4,6 +4,9 @@
 
 /*Includes*/
 # include <string>
+# include <iostream>
+# include <iomanip>
+# include <sstream>
 
 class	ScalarConverter {
 	public:
@@ -12,21 +15,12 @@ class	ScalarConverter {
 
 	private:
 	/*Constructor - Copy Constructor - Destructor*/
-		ScalarConverter() = delete;
-		ScalarConverter(const ScalarConverter& copy_from) = delete;
-		~ScalarConverter() = delete;
+		ScalarConverter();
+		ScalarConverter(const ScalarConverter& copy_from);
+		~ScalarConverter();
 
 	/*Overloaded Operator*/
-		ScalarConverter&	operator=(const ScalarConverter& other) = delete;
-
-
+		ScalarConverter&	operator=(const ScalarConverter& other);
 };
 
 #endif
-
-
-#include "ScalarConverter.hpp"
-
-void	ScalarConverter::convert(const std::string literal) {
-	
-}
