@@ -3,9 +3,14 @@
 # define	SCALARCONVERTER_HPP
 
 /*Includes*/
+# include <string>
 
 class	ScalarConverter {
 	public:
+	/*Public Method*/
+		static void	convert(const std::string literal) ;
+
+	private:
 	/*Constructor - Copy Constructor - Destructor*/
 		ScalarConverter() = delete;
 		ScalarConverter(const ScalarConverter& copy_from) = delete;
@@ -14,8 +19,7 @@ class	ScalarConverter {
 	/*Overloaded Operator*/
 		ScalarConverter&	operator=(const ScalarConverter& other) = delete;
 
-	/*Public Method*/
-		static void	convert(const std::string literal) ;
+
 };
 
 #endif
