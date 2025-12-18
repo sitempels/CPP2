@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 07:40:00 by stempels          #+#    #+#             */
-/*   Updated: 2025/11/28 13:56:24 by stempels         ###   ########.fr       */
+/*   Updated: 2025/12/02 14:02:08 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int main(void) {
 	Intern	intern;
 		std::cout << std::endl;
 	try {
-		std::cout << "ShrubberyCreationForm\n" << std::endl;
+		std::cout << "\nShrubberyCreationForm\n" << std::endl;
 		Bureaucrat Mr_Shrubby("Mr_Shrubby", 130);
 		std::cout << std::endl;
 		AForm&	Shrubby_form = *intern.makeForm("ShrubberyCreationForm", "Forest");
@@ -102,7 +102,7 @@ int main(void) {
 
 
 	try {
-		std::cout << std::endl << "RobotomyRequestForm\n" << std::endl;
+		std::cout << std::endl << "\nRobotomyRequestForm\n" << std::endl;
 		Bureaucrat Mr_Robo("Mr_Robo", 45);
 		std::cout << std::endl;
 		AForm&	Robo_form = *intern.makeForm("RobotomyRequestForm", "ClapTrap");
@@ -125,7 +125,7 @@ int main(void) {
 	}
 
 	try {
-		std::cout << "PresidentialPardonForm\n" << std::endl;
+		std::cout << "\nPresidentialPardonForm\n" << std::endl;
 		Bureaucrat Mr_Robo("Mr_Robo", 45);
 		std::cout << std::endl;
 		Bureaucrat Mr_President("Mr_President", 5);

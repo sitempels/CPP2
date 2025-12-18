@@ -4,7 +4,7 @@
 
 /*Constructors*/
 template <typename T_array>
-Array<T_arry>::Array()
+Array<T_array>::Array()
 	: _array(NULL)
 	, _size(0) {
 }
@@ -20,11 +20,11 @@ template <typename T_array>
 Array<T_array>::Array(const Array& copy_from)
 	: _array(new T_array[copy_from._size])
 	, _size(copy_from._size) {
-	for (unisgned int i = -; i < _size; i++)
+	for (unsigned int i = 0; i < _size; i++)
 		_array[i] = copy_from._array[i];
 }
 
-/*Destructors"/
+/*Destructors*/
 template <typename T_array>
 Array<T_array>::~Array() {
 	delete[](_array);
@@ -46,14 +46,14 @@ Array<T_array>&	Array<T_array>::operator=(const Array& other) {
 template <typename T_array>
 T_array&	Array<T_array>::operator[](unsigned int i) {
 	if (i >= _size)
-		throw (OutOfBoundExceptions());
+		throw (OutOfBoundsException());
 	return (_array[i]);
 }
 
 template <typename T_array>
 const T_array&	Array<T_array>::operator[](unsigned int i) const {
 	if (i >= _size)
-		throw (OutOfBoundException());
+		throw (OutOfBoundsException());
 	return (_array[i]);
 }
 
@@ -64,8 +64,8 @@ unsigned int	Array<T_array>::size() const {
 }
 
 /*Exceptions*/
-template <T_array>
-const char* Array<T_array>::OutOfBoundException::what() const throw() {
+template <typename T_array>
+const char* Array<T_array>::OutOfBoundsException::what() const throw() {
 	return ("Index out of bounds");
 }
 
