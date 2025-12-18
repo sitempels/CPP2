@@ -20,7 +20,7 @@ int	main() {
 			std::cout << *easyfind(vector, 20) << std::endl;
 		}
 		catch (std::exception& e) {
-			std::cout << e.what() << std::endl;
+			std::cerr << e.what() << std::endl;
 		}
 	}
 	{
@@ -36,7 +36,7 @@ int	main() {
 			std::cout << *easyfind(list, 20) << std::endl;
 		}
 		catch (std::exception& e) {
-			std::cout << e.what() << std::endl;
+			std::cerr << e.what() << std::endl;
 		}
 	}
 	{
@@ -52,7 +52,7 @@ int	main() {
 			std::cout << *easyfind(deque, 20) << std::endl;
 		}
 		catch (std::exception& e) {
-			std::cout << e.what() << std::endl;
+			std::cerr << e.what() << std::endl;
 		}
 	}
 	return (0);
