@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 #
-NAME_PROJECT = template
+NAME_PROJECT = abomination
 NAME = $(NAME_PROJECT)
 debug: NAME = $(addprefix debug_, $(NAME_PROJECT))
 TYPE = EXEC
