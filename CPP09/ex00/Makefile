@@ -18,7 +18,7 @@ TYPE = EXEC
 CXX = c++
 debug: CXX = g++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-debug: CXXFLAGS = -g3
+debug: CXXFLAGS = -g3 -D_GLIBCXX_DEBUG
 CPPFLAGS = $(INC_FLAG)
 #
 #----------------------------LINKER--------------------------------------------#

@@ -34,7 +34,7 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 		throw (BitcoinExchange::InvalidColumnFormat());
 
 	//Parse header file and print Value of bitcoin/Error accordingly
-	char				separator[3];
+	size_t				nbr_line = 1;
 	double				price;
 	std::tm 			date = {};
 	std::stringstream	sstream;
@@ -42,7 +42,7 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 	while (!stream.eof()) {
 		line.clear();
 		sstream.clear();
-		separator[2] = separator[1] = separator[0] = ' ';
+		sstream.str("");
 		price = -1;
 		date.tm_year = 0;
 		std::getline(stream, line);
@@ -50,15 +50,9 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 			break ;
 		sstream << line;
 		sstream	>> std::noskipws
-				>> date.tm_year >> separator[0]
-				>> date.tm_mon >> separator[1]
-				>> date.tm_mday >> separator[2];
-		if ((sstream.fail() && !sstream.eof())
-			|| separator[0] != '-'
-			|| separator[1] != '-'
-			|| separator[2] != ',') {
+				>> date;
+		if (sstream.fail() || sstream.get() != ',')
 			throw (BitcoinExchange::InvalidColumnFormat()); 
-		}
 		if (!validateDate(date))
 			throw (BitcoinExchange::InvalidDateFormat());
 		sstream >> std::noskipws >> price;
@@ -71,6 +65,7 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 			quotes_.clear();
 			throw (BitcoinExchange::DuplicateInDatabase());
 		}
+		nbr_line++;
 	}
 	//End of file reached
 	if (stream.eof())
@@ -98,29 +93,25 @@ void	BitcoinExchange::execute(const char* file_name) {
 		throw (BitcoinExchange::InvalidColumnFormat());
 
 	//Parse header file and print Value of bitcoin/Error accordingly
-	char				separator[3];
+	char				sep = ' ';
 	float				value;
 	std::tm 			date = {};
 	std::stringstream	sstream;
 
 	while (!stream.eof()) {
+		sep = ' ';
 		line.clear();
 		sstream.clear();
 		sstream.str("");
-		separator[2] = separator[1] = separator[0] = ' ';
 		value = -1;
 		date.tm_year = 0;
 		std::getline(stream, line);
 		if (stream.fail())
 			break ;
 		sstream << line;
-		sstream	>> date.tm_year >> separator[0]
-				>> date.tm_mon >> separator[1]
-				>> date.tm_mday >> separator[2];
-		if ((sstream.fail() && !sstream.eof())
-			|| separator[0] != '-'
-			|| separator[1] != '-'
-			|| separator[2] != '|') {
+		sstream >> date;
+		sstream >> sep;
+		if (sstream.fail() || sep != '|') {
 			std::cerr	<< "Error: bad format." << std::endl;
 			continue ;
 		}
@@ -146,8 +137,6 @@ void	BitcoinExchange::execute(const char* file_name) {
 
 /*Private Methods*/
 bool	BitcoinExchange::validateDate(std::tm& date) const {
-		date.tm_year -= 1900;
-		date.tm_mon -= 1;
 		if (mktime(&date) == -1) {
 			std::cerr	<< "Error: bad input => " << date << std::endl;
 			return (false);
@@ -200,4 +189,18 @@ const std::map<unsigned int, double>&	BitcoinExchange::getQuotes() const {
 std::ostream&	operator<<(std::ostream& ostream, const std::tm& tm) {
 	ostream << tm.tm_year + 1900 << "-" << tm.tm_mon + 1 << "-" << tm.tm_mday;
 	return (ostream);
+}
+
+std::istream&	operator>>(std::istream& istream, std::tm& tm) {
+		char	separator[3] = {};
+		istream	>> tm.tm_year >> separator[0]
+				>> tm.tm_mon >> separator[1]
+				>> tm.tm_mday;
+		if (separator[0] != '-'
+			|| separator[1] != '-') {
+			istream.setstate(std::ios::failbit);
+		}
+		tm.tm_year -= 1900;
+		tm.tm_mon -= 1;
+	return (istream);
 }

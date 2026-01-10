@@ -82,5 +82,6 @@ class	BitcoinExchange {
 };
 
 std::ostream&	operator<<(std::ostream& ostream, const std::tm& tm) ;
+std::istream&	operator>>(std::istream& istream, std::tm& tm) ;
 
 #endif
