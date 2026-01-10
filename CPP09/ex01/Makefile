@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 #
-NAME_PROJECT = easyfind
+NAME_PROJECT = RPN
 NAME = $(NAME_PROJECT)
 debug: NAME = $(addprefix debug_, $(NAME_PROJECT))
 TYPE = EXEC
@@ -18,7 +18,7 @@ TYPE = EXEC
 CXX = c++
 debug: CXX = g++ 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
-debug: CXXFLAGS = -g3
+debug: CXXFLAGS = -g3 -D_GLIBCXX_DEBUG
 CPPFLAGS = $(INC_FLAG)
 #
 #----------------------------LINKER--------------------------------------------#
@@ -27,7 +27,7 @@ CPPFLAGS = $(INC_FLAG)
 #----------------------------SRC-----------------------------------------------#
 SRC_DIR = .
 #
-SRCS = main
+SRCS = main RPN
 #
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .cpp, $(SRCS))) 
 #
