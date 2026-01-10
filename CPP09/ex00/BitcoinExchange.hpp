@@ -13,8 +13,8 @@
 
 class	BitcoinExchange {
 	public:
-	/*Constructor - Copy Constructor - Destructor*/
-		BitcoinExchange(const char* database);
+	/*Default Constructor - Copy Constructor - Destructor*/
+		BitcoinExchange();
 		BitcoinExchange(const BitcoinExchange& copy_from);
 		~BitcoinExchange();
 
@@ -22,7 +22,8 @@ class	BitcoinExchange {
 		BitcoinExchange&	operator=(const BitcoinExchange& rhs) ;
 
 	/*Public Methods*/
-		void									execute(const char* filename) ;
+		void		execute(const char* filename) ;
+		void		loadDatabase(const char* file_name) ;
 
 	/*Getter*/
 		const std::map<unsigned int, double>&	getQuotes() const;
@@ -38,7 +39,7 @@ class	BitcoinExchange {
 		class InvalidColumnFormat : public std::exception {
 			public:
 				virtual const char*	what() const throw() {
-					return ("Invalid column format. Expect 'date, exchange rate'");
+					return ("Invalid column format.");
 				}
 		};
 
@@ -71,13 +72,10 @@ class	BitcoinExchange {
 		};
 
 		private:
-		/*Default Constructor*/
-			BitcoinExchange();
 		/*Private Attribute*/
 			std::map<unsigned int, double>	quotes_;
 
 		/*Private Methods*/
-			void		loadDatabase(const char* file_name) ;
 			bool		validateDate(std::tm& date) const;
 			bool		validateValue(const float& price) const;					
 			void		printValue(const std::tm& date, const float& value) const ;
