@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/16 16:56:15 by stempels          #+#    #+#             */
+/*   Updated: 2026/01/16 16:58:15 by stempels         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef		RPN_HPP
 # define	RPN_HPP
@@ -10,21 +21,6 @@
 # include <stack>
 # include <sys/types.h>
 
-/*Enum*/
-typedef	enum	e_type	{
-	DIGIT,
-	ADD,
-	SUB,
-	MUL,
-	DIV,
-}				t_type;
-
-/*Struct*/
-typedef struct	s_token {
-	t_type	type;
-	char	value;
-}				t_token;
-
 class	RPN {
 	public:
 	/*Default Constructor - Copy Constructor - Destructor*/
@@ -36,21 +32,18 @@ class	RPN {
 		RPN&	operator=(const RPN& rhs);
 
 	/*Public Methods*/
-		bool	setTokenList(const char* input) ;
-		bool	resolve();
+		bool	resolve(const char* input) ;
 
 	/*Getters*/
-	std::stack<t_token>	getTokenList() const;
+	std::stack<int>	getStack() const;
 
 	private:
 	/*Private Attributes*/
-		std::stack<t_token>	token_list_;
+		std::stack<int>	stack;
 	/*Private Methods*/
-		bool	tokenizeInput(std::stringstream& input) ;
-		void	cleanTokenList() ;
+		bool	isValidEndState(const std::stringstream& stream);
 };
 
-std::ostream&	operator<<(std::ostream& ostream, const t_token& token);
-std::ostream&	operator<<(std::ostream& ostream, const std::stack<t_token> token_list);
+std::ostream&	operator<<(std::ostream& ostream, std::stack<int> stack_copy) ;
 
 #endif

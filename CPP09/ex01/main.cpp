@@ -9,9 +9,8 @@ int	main(int argc, char **argv) {
 
 	RPN	calc;
 
-	calc.setTokenList(argv[1]);
-	std::cout << calc.getTokenList() << std::endl;
-	if (!calc.resolve())
+	if (!calc.resolve(argv[1]))
 		return (1);
+	std::cout << calc.getStack().top() << std::endl;
 	return (0);
 }
