@@ -136,9 +136,11 @@ void	BitcoinExchange::execute(const char* file_name) {
 }
 
 /*Private Methods*/
-bool	BitcoinExchange::validateDate(std::tm& date) const {
-		if (mktime(&date) == -1) {
-			std::cerr	<< "Error: bad input => " << date << std::endl;
+bool	BitcoinExchange::validateDate(std::tm& data) const {
+		std::time_t time = mktime(&data);
+		std::tm	tmp = *std::localtime(&time);
+		if (tmp != data) {
+			std::cerr	<< "Error: bad input => " << data << std::endl;
 			return (false);
 		}
 		return (true);
@@ -203,4 +205,14 @@ std::istream&	operator>>(std::istream& istream, std::tm& tm) {
 		tm.tm_year -= 1900;
 		tm.tm_mon -= 1;
 	return (istream);
+}
+
+bool	operator==(const std::tm& lhs, const std::tm& rhs) {
+	if (lhs.tm_year == rhs.tm_year && lhs.tm_mon == rhs.tm_mon && lhs.tm_mday == rhs.tm_mday)	
+		return (true);
+	return (false);
+}
+
+bool	operator!=(const std::tm& lhs, const std::tm& rhs) {
+	return (!(lhs == rhs));
 }

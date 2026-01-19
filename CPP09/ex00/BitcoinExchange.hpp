@@ -83,5 +83,7 @@ class	BitcoinExchange {
 
 std::ostream&	operator<<(std::ostream& ostream, const std::tm& tm) ;
 std::istream&	operator>>(std::istream& istream, std::tm& tm) ;
+bool			operator==(const std::tm& lhs, const std::tm& rhs) ;
+bool			operator!=(const std::tm&lhs, const std::tm& rhs) ;
 
 #endif
