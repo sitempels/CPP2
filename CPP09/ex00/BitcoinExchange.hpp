@@ -9,6 +9,7 @@
 # include <string>
 # include <map>
 # include <exception>
+# include <limits>
 # include <ctime>
 
 class	BitcoinExchange {
