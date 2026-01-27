@@ -103,7 +103,7 @@ void	BitcoinExchange::execute(const char* file_name) {
 		line.clear();
 		sstream.clear();
 		sstream.str("");
-		value = -1;
+		value = std::numeric_limits<float>::quiet_NaN();
 		date.tm_year = 0;
 		std::getline(stream, line);
 		if (stream.fail())
@@ -147,8 +147,12 @@ bool	BitcoinExchange::validateDate(std::tm& data) const {
 }
 
 bool	BitcoinExchange::validateValue(const float& value) const { 
-	if (value < 0.0) {
-		std::cerr << "Input Error: not a positive number." << std::endl;	
+	if (value != value) {
+		std::cerr << "Error: invalid value. Expect positive integer or float." << std::endl;
+		return (false) ;
+	}
+	else if (value < 0.0) {
+		std::cerr << "Error: not a positive value." << std::endl;	
 		return (false) ;
 	}
 	else if (value > 1000.0) {
