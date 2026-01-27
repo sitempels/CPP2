@@ -25,13 +25,13 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 	//Try to open input file
 	std::ifstream	stream(file_name);
 	if (!stream.is_open())
-		throw (BitcoinExchange::CouldNotOpenFile());
+		throw (std::runtime_error("Database: Could not open the file"));
 
 	//Extract and verify header of input file
 	std::string line;
 	std::getline(stream, line);
 	if (line != "date,exchange_rate")
-		throw (BitcoinExchange::InvalidColumnFormat());
+		throw (std::runtime_error("Database: Invalid column format"));
 
 	//Parse header file and print Value of bitcoin/Error accordingly
 	size_t				nbr_line = 1;
@@ -52,18 +52,18 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 		sstream	>> std::noskipws
 				>> date;
 		if (sstream.fail() || sstream.get() != ',')
-			throw (BitcoinExchange::InvalidColumnFormat()); 
+			throw (std::runtime_error("Database: Invalid column format")); 
 		if (!validateDate(date))
-			throw (BitcoinExchange::InvalidDateFormat());
+			throw (std::runtime_error("Database: Invalid date format"));
 		sstream >> std::noskipws >> price;
 		if (price == -1)
-			throw (BitcoinExchange::InvalidPriceFormat());
+			throw (std::runtime_error("Database: Invalid price format"));
 		unsigned int	uint_date = (((date.tm_year * 100) + (date.tm_mon)) * 100) + date.tm_mday;
 		std::pair<std::map<unsigned int, double>::iterator, bool>	check;
 		check = quotes_.insert(std::make_pair(uint_date, price));
 		if (!check.second) {
 			quotes_.clear();
-			throw (BitcoinExchange::DuplicateInDatabase());
+			throw (std::runtime_error("Database: Duplicate"));
 		}
 		nbr_line++;
 	}
@@ -72,7 +72,7 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 		return ;
 	//Something went REALLY wrong
 	else
-		throw (BitcoinExchange::FatalErrorEncountered());
+		throw (std::runtime_error("Database: Fatal error encountered"));
 }
 
 void	BitcoinExchange::execute(const char* file_name) {
@@ -84,13 +84,13 @@ void	BitcoinExchange::execute(const char* file_name) {
 	//Try to open input file
 	std::ifstream	stream(file_name);
 	if (!stream.is_open())
-		throw (BitcoinExchange::CouldNotOpenFile());
+		throw (std::runtime_error("Input: Could not open file"));
 
 	//Extract and verify header of input file
 	std::string line;
 	std::getline(stream, line);
 	if (line != "date | value")
-		throw (BitcoinExchange::InvalidColumnFormat());
+		throw (std::runtime_error("Input: Invalid column format"));
 
 	//Parse header file and print Value of bitcoin/Error accordingly
 	char				sep = ' ';
@@ -112,7 +112,7 @@ void	BitcoinExchange::execute(const char* file_name) {
 		sstream >> date;
 		sstream >> sep;
 		if (sstream.fail() || sep != '|') {
-			std::cerr	<< "Error: bad format." << std::endl;
+			std::cerr	<< "Input Error: bad format." << std::endl;
 			continue ;
 		}
 		if (!validateDate(date)) {
@@ -120,7 +120,7 @@ void	BitcoinExchange::execute(const char* file_name) {
 		}
 		sstream >> value;
 		if (sstream.fail()) {
-			std::cerr << "Error: invalid value format. Expect integer or float." << std::endl;
+			std::cerr << "Input Error: missing numeric value. Expect positive integer or float." << std::endl;
 			continue ;
 		}
 		if (!validateValue(value))
@@ -132,31 +132,27 @@ void	BitcoinExchange::execute(const char* file_name) {
 		return ;
 	//Something went REALLY wrong
 	else
-		throw (BitcoinExchange::FatalErrorEncountered());
+		throw (std::runtime_error("Fatal error encountered"));
 }
 
 /*Private Methods*/
 bool	BitcoinExchange::validateDate(std::tm& data) const {
-		std::time_t time = mktime(&data);
-		std::tm	tmp = *std::localtime(&time);
+		std::tm	tmp = data; 
+		(void)mktime(&data);
 		if (tmp != data) {
-			std::cerr	<< "Error: bad input => " << data << std::endl;
+			std::cerr	<< "Input Error: invalid date => " << tmp << std::endl;
 			return (false);
 		}
 		return (true);
 }
 
 bool	BitcoinExchange::validateValue(const float& value) const { 
-	if (value == -1) {
-		std::cerr << "Error: invalid value format. Expect integer or float." << std::endl;
-		return (false) ;
-	}
-	else if (value < 0.0) {
-		std::cerr << "Error: not a positive number." << std::endl;	
+	if (value < 0.0) {
+		std::cerr << "Input Error: not a positive number." << std::endl;	
 		return (false) ;
 	}
 	else if (value > 1000.0) {
-		std::cerr << "Error: too large a number." << std::endl;
+		std::cerr << "Input Error: too large a number." << std::endl;
 		return (false) ;
 	}
 	else
@@ -174,7 +170,7 @@ void	BitcoinExchange::printValue(const std::tm& date, const float& value) const 
 	if (target == last) {
 		target = quotes_.upper_bound(uint_date);
 		if (target == quotes_.begin()) {
-			std::cerr << "Error: no data available for that date." << std::endl;
+			std::cerr << "Input Error: no data available for that date.\n Date precede the first date available." << std::endl;
 			return ;
 		}
 		target--;
