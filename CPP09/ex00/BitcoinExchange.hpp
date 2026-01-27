@@ -34,8 +34,8 @@ class	BitcoinExchange {
 			std::map<unsigned int, double>	quotes_;
 
 		/*Private Methods*/
-			bool		validateDate(std::tm& date) const;
-			bool		validateValue(const float& price) const;					
+			void		validateDate(std::tm& date) const;
+			void		validateValue(const float& price) const;					
 			void		printValue(const std::tm& date, const float& value) const ;
 };
 

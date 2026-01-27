@@ -9,13 +9,14 @@ int	main(int argc, char **argv) {
 
 	std::cout << "\nTry without loading a database\n" << std::endl;
 	market.execute(argv[1]);
+
 	std::cout << "\nTry with a faulty database loaded\n" << std::endl;
 	try {
-		market.loadDatabase("data_faulty.csv");
+		market.loadDatabase("data2.csv");
 		market.execute(argv[1]);	
 	}
 	catch (const std::exception& e) {
-		std::cerr << "Exception caught: " << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 
 	std::cout << "\nTry with a database loaded\n" << std::endl;
@@ -24,7 +25,7 @@ int	main(int argc, char **argv) {
 		market.execute(argv[1]);	
 	}
 	catch (const std::exception& e) {
-		std::cerr << "Exception caught: " << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 	return (0);
 }

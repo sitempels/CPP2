@@ -53,8 +53,13 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 				>> date;
 		if (sstream.fail() || sstream.get() != ',')
 			throw (std::runtime_error("Database: Invalid column format")); 
-		if (!validateDate(date))
-			throw (std::runtime_error("Database: Invalid date format"));
+		try {
+			validateDate(date);
+		}
+		catch (const std::exception& e) {
+			std::string	error_msg("Database: ");
+			throw (std::runtime_error(error_msg + e.what()));
+		}
 		sstream >> std::noskipws >> price;
 		if (price == -1)
 			throw (std::runtime_error("Database: Invalid price format"));
@@ -115,7 +120,11 @@ void	BitcoinExchange::execute(const char* file_name) {
 			std::cerr	<< "Input Error: bad format." << std::endl;
 			continue ;
 		}
-		if (!validateDate(date)) {
+		try {
+			validateDate(date);
+		}
+		catch (const std::exception& e) {
+			std::cerr << "Input Error: " << e.what() << std::endl;
 			continue ;
 		}
 		sstream >> value;
@@ -123,8 +132,13 @@ void	BitcoinExchange::execute(const char* file_name) {
 			std::cerr << "Input Error: missing numeric value. Expect positive integer or float." << std::endl;
 			continue ;
 		}
-		if (!validateValue(value))
+		try {
+			validateValue(value);
+		}
+		catch (const std::exception& e) {
+			std::cerr << "Input Error: " << e.what() << std::endl;
 			continue ;
+		}
 		printValue(date, value);
 	}
 	//End of file reached
@@ -136,31 +150,28 @@ void	BitcoinExchange::execute(const char* file_name) {
 }
 
 /*Private Methods*/
-bool	BitcoinExchange::validateDate(std::tm& data) const {
+void	BitcoinExchange::validateDate(std::tm& data) const {
 		std::tm	tmp = data; 
 		(void)mktime(&data);
 		if (tmp != data) {
-			std::cerr	<< "Input Error: invalid date => " << tmp << std::endl;
-			return (false);
+			std::stringstream stream;
+			stream << "invalid date => " << tmp << "\n";
+			std::string	error;
+			std::getline(stream, error);	
+			throw (std::runtime_error(error));
 		}
-		return (true);
+		return ;
 }
 
-bool	BitcoinExchange::validateValue(const float& value) const { 
-	if (value != value) {
-		std::cerr << "Error: invalid value. Expect positive integer or float." << std::endl;
-		return (false) ;
-	}
-	else if (value < 0.0) {
-		std::cerr << "Error: not a positive value." << std::endl;	
-		return (false) ;
-	}
-	else if (value > 1000.0) {
-		std::cerr << "Input Error: too large a number." << std::endl;
-		return (false) ;
-	}
+void	BitcoinExchange::validateValue(const float& value) const { 
+	if (value != value)
+		throw (std::runtime_error("invalid value. Expect positive integer or float."));
+	else if (value < 0.0)
+		throw (std::runtime_error("not a positive value."));
+	else if (value > 1000.0)
+		throw (std::runtime_error("too large a number."));
 	else
-		return (true);
+		return ;
 }
 
 void	BitcoinExchange::printValue(const std::tm& date, const float& value) const {
