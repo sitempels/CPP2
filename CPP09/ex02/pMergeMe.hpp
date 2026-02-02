@@ -5,17 +5,20 @@
 # include <sstream>
 # include <vector>
 # include <deque>
+# include <algorithm>
 
 namespace fordJohnson {
 	bool						isValidInput(char** argv) ;
-	unsigned int				exponent(unsigned int base, unsigned exponent) ;
+	unsigned int				exponent(unsigned int base, unsigned int exponent) ;
 
-	std::vector<unsigned int>	fillContainer(char** argv) ;
-	bool						runAlgo(std::vector<unsigned int>& container) ;
-	std::vector<unsigned int>	sortPair(std::vector<unsigned int> container, unsigned int pair_nbr) ;
+	std::vector<unsigned int>	fillVectContainer(char** argv) ;
+	bool						runAlgo(std::vector<unsigned int>& container, unsigned int iteration = 0) ;
 
-	std::deque<unsigned int>	fillContainer(char** argv) ;
+	std::deque<unsigned int>	fillDeqContainer(char** argv) ;
 	bool						runAlgo(std::deque<unsigned int>& container, unsigned int iteration = 0) ;
+
+	//global for comparaison counter
+	extern unsigned int g_comp;
 }
 
 #endif
