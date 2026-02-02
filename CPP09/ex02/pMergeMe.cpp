@@ -74,48 +74,51 @@ bool	fordJohnson::runAlgo(std::vector<unsigned int>& container, unsigned int	ite
 			return (false);
 		}
 	}
-	//Create main list
-	std::vector<std::vector<unsigned int>::iterator> main;
-	unsigned int main_size = container.size() / pair_size;
-	main.push_back(container.begin() + (pair_size - 1));
-	for (size_t i = 2; i <= main_size; i = i + 2) {
-		main.push_back(container.begin() + (i * pair_size) - 1);
-	}
-	//Insert smallest pair following Jacobstal sequence
-	//(2 exp(n + 1) + (-1) exp(n)) / 3
-	
-	unsigned int	prev_jacobs = 1;
-	for (unsigned int	jacobs = 3; jacobs <= pair_nbr; jacobs = calcJacobstal(jacobs)) {
-		for (unsigned int i = jacobs; i > prev_jacobs;  --i) {
-			if ((2 * i - 1) * pair_size - 1 >= container.size())
-				continue ;
-			std::vector<unsigned int>::iterator	elem = container.begin() + ((2 * i - 1) * (pair_size)) - 1;
-			std::vector<std::vector<unsigned int>::iterator>::iterator it = main.begin();
-			while (it != main.end() && *elem > **it) {
-				++it;
-				fordJohnson::g_comp++;
+	if (iteration > 0) {
+		//Create main list
+		std::vector<std::vector<unsigned int>::iterator> main;
+		unsigned int main_size = container.size() / pair_size;
+		main.push_back(container.begin() + (pair_size - 1));
+		for (size_t i = 2; i <= main_size; i = i + 2) {
+			main.push_back(container.begin() + (i * pair_size) - 1);
+		}
+		//Insert smallest pair following Jacobstal sequence
+		//(2 exp(n + 1) + (-1) exp(n)) / 3
+		
+		unsigned int	prev_jacobs = 1;
+		for (unsigned int	jacobs = 3; jacobs <= pair_nbr; jacobs = calcJacobstal(jacobs)) {
+			for (unsigned int i = jacobs; i > prev_jacobs;  --i) { // binary insertion to do, diminish expected
+				if ((2 * i - 1) * pair_size - 1 >= container.size())
+					continue ;
+				std::vector<unsigned int>::iterator	elem = container.begin() + ((2 * i - 1) * (pair_size)) - 1;
+				std::vector<std::vector<unsigned int>::iterator>::iterator it = main.begin();
+				while (it != main.end() && *elem > **it) {
+					++it;
+					fordJohnson::g_comp++;
+				}
+				if (it != main.end())
+					main.insert(it, elem);
 			}
-			if (it != main.end())
-				main.insert(it, elem);
+			prev_jacobs = jacobs;
 		}
-		prev_jacobs = jacobs;
-	}
-	
-	//Reorder container base on main order
-	std::vector<unsigned int>	response;
-	for (std::vector<std::vector<unsigned int>::iterator>::iterator it = main.begin(); it != main.end(); ++it) {
-		for (int i = pair_size - 1; i >= 0; --i) {
-			response.push_back(*(*it - i));
+		
+		//Reorder container base on main order
+		std::vector<unsigned int>	response;
+		for (std::vector<std::vector<unsigned int>::iterator>::iterator it = main.begin(); it != main.end(); ++it) {
+			for (int i = pair_size - 1; i >= 0; --i) {
+				response.push_back(*(*it - i));
+			}
 		}
-	}
-	for (std::vector<unsigned int>::iterator it = container.end() - (container.size() % pair_size); it != container.end(); ++it) {
-		response.push_back(*it);
-	}
+
+		for (std::vector<unsigned int>::iterator it = container.end() - (container.size() % pair_size); it != container.end(); ++it) {
+			response.push_back(*it);
+		}
 
 
-	//Insert pend in reserve order
-	//for ()
-	container = response;
+		//Insert pend in reserve order
+		//for ()
+		container = response;
+	}
 	return (true);
 }
 
