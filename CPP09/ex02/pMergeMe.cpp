@@ -2,6 +2,8 @@
 
 static std::vector<unsigned int>	sortPair(std::vector<unsigned int>& container, unsigned int pair_size);
 static unsigned int					calcJacobstal(unsigned int actual) ;
+static std::vector<fordJohnson::t_pair>			makePair(std::vector<unsigned int> container, unsigned int pair_size, unsigned int nbr_pair);
+//static std::vector<std::vector<unsigned int>::iterator>::iterator	lowerBound(std::vector<std::vector<unsigned int>::iterator>::iterator first, std::vector<std::vector<unsigned int>::iterator>::iterator last, unsigned int value);
 
 namespace fordJohnson {
 	unsigned int g_comp = 0;
@@ -57,27 +59,31 @@ std::deque<unsigned int>	fordJohnson::fillDeqContainer(char** argv) {
 
 bool	fordJohnson::runAlgo(std::vector<unsigned int>& container, unsigned int	iteration) {
 	//Create recursive pairs
-	unsigned int	pair_size = fordJohnson::exponent(2, iteration);
+	unsigned int	elem_size = fordJohnson::exponent(2, iteration);
 	++iteration;
-	unsigned int	pair_nbr = container.size() / pair_size;
+	unsigned int	pair_nbr = container.size() / (2 * elem_size);
+	pair_nbr -= pair_nbr % 2;
 
 	//Recursively create and sort pair -> function is in recursive state onward
-	if (container.size() / pair_size < 2) {
+	if (pair_nbr < 2) {
 		return (true);
 	}
 	else {
 		//Sort with bigest pair as comparative value
-		container = sortPair(container, pair_size);
+		container = sortPair(container, elem_size);
 		if (!runAlgo(container, iteration)) {
 			//error message ?
 			container.clear();
 			return (false);
 		}
 	}
+	std::vector<fordJohnson::t_pair>	pairs_list = makePair(container, elem_size, pair_nbr);
+	/*
 	if (iteration > 0) {
 		//Create main list
 		std::vector<std::vector<unsigned int>::iterator> main;
 		unsigned int main_size = container.size() / pair_size;
+		main.reserve(main_size);
 		main.push_back(container.begin() + (pair_size - 1));
 		for (size_t i = 2; i <= main_size; i = i + 2) {
 			main.push_back(container.begin() + (i * pair_size) - 1);
@@ -91,13 +97,16 @@ bool	fordJohnson::runAlgo(std::vector<unsigned int>& container, unsigned int	ite
 				if ((2 * i - 1) * pair_size - 1 >= container.size())
 					continue ;
 				std::vector<unsigned int>::iterator	elem = container.begin() + ((2 * i - 1) * (pair_size)) - 1;
-				std::vector<std::vector<unsigned int>::iterator>::iterator it = main.begin();
+			//	std::vector<std::vector<unsigned int>::iterator>::iterator it = main.begin();
+				main.insert(lowerBound(main.begin(), main.end(), *elem), elem);
+				
 				while (it != main.end() && *elem > **it) {
 					++it;
 					fordJohnson::g_comp++;
 				}
 				if (it != main.end())
 					main.insert(it, elem);
+					
 			}
 			prev_jacobs = jacobs;
 		}
@@ -109,8 +118,9 @@ bool	fordJohnson::runAlgo(std::vector<unsigned int>& container, unsigned int	ite
 				response.push_back(*(*it - i));
 			}
 		}
+		size_t	size = main_size * pair_size;
 
-		for (std::vector<unsigned int>::iterator it = container.end() - (container.size() % pair_size); it != container.end(); ++it) {
+		for (std::vector<unsigned int>::iterator it = container.begin() + (size - 1); it != container.end(); ++it) {
 			response.push_back(*it);
 		}
 
@@ -119,20 +129,34 @@ bool	fordJohnson::runAlgo(std::vector<unsigned int>& container, unsigned int	ite
 		//for ()
 		container = response;
 	}
+	*/
 	return (true);
 }
+
+static std::vector<fordJohnson::t_pair>		makePair(std::vector<unsigned int> container, unsigned int elem_size, unsigned int pair_nbr) {
+	std::vector<fordJohnson::t_pair>		pair_list;
+	for (size_t id = 0; id < pair_nbr; id++) {
+		fordJohnson::t_pair	elem;
+		elem.id = id + 1;
+		elem.small = container.begin() + (elem_size - 1) + (id * 2 * elem_size);
+		elem.big = container.begin() + (2 * elem_size - 1) + (id * 2 * elem_size);
+		pair_list.push_back(elem);
+	}
+	return (pair_list);
+}
+
 
 static unsigned int	calcJacobstal(unsigned int actual) {
 	unsigned int	next = (fordJohnson::exponent(actual + 1, 2) - fordJohnson::exponent(-1, actual)) / 3;
 	return (next);
 }
 
-static std::vector<unsigned int>	sortPair(std::vector<unsigned int>& container, unsigned int pair_size) {
+static std::vector<unsigned int>	sortPair(std::vector<unsigned int>& container, unsigned int elem_size) {
 	
-	for (unsigned int pair_nbr = container.size() / (2 * pair_size); pair_nbr > 0; pair_nbr--) {
-		std::vector<unsigned int>::iterator first_elem = container.begin() + (pair_nbr - 1) * (2 * pair_size); 
+	for (unsigned int pair_nbr = container.size() / (2 * elem_size); pair_nbr > 0; pair_nbr--) {
+		std::vector<unsigned int>::iterator first_elem = container.begin() + (pair_nbr - 1) * (2 * elem_size); 
 		std::vector<unsigned int>::iterator middle_elem = first_elem + pair_size; 
-		std::vector<unsigned int>::iterator last_elem = container.begin() + (pair_nbr) * (2 * pair_size) - 1;
+		std::vector<unsigned int>::iterator last_elem = container.begin() + (pair_nbr) * (2 * elem_size) - 1;
 		if (*(middle_elem - 1) > *last_elem) {
 			std::rotate(first_elem, middle_elem, last_elem + 1);
 		}

@@ -8,6 +8,15 @@
 # include <algorithm>
 
 namespace fordJohnson {
+	typedef struct	s_pair {
+		size_t			id;
+		unsigned int	small_container_idx;
+		unsigned int	small_idx;
+		unsigned int	big_container_idx;
+		unsigned int	big_idx;
+
+	}				t_pair;
+
 	bool						isValidInput(char** argv) ;
 	unsigned int				exponent(unsigned int base, unsigned int exponent) ;
 
@@ -19,6 +28,11 @@ namespace fordJohnson {
 
 	//global for comparaison counter
 	extern unsigned int g_comp;
+
+	template <typename Iterator, typename T>
+	Iterator lowerBound(Iterator first, Iterator last, const T& value) ;
 }
+
+# include "pMergeMe.tpp"
 
 #endif

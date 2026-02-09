@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 09:50:36 by stempels          #+#    #+#             */
-/*   Updated: 2026/02/02 13:53:09 by stempels         ###   ########.fr       */
+/*   Updated: 2026/02/07 15:44:07 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,40 @@ int	main(int argc, char** argv) {
 	}
 	{
 		std::cout << "------   VECTOR container   -----\n" << std::endl;
+		long int	 start_time = getTime();
 		std::vector<unsigned int>	container = fordJohnson::fillVectContainer(argv);
+		long int	process_time = getTime() - start_time;
 		std::cout << "Before:\t";
 		for (std::vector<unsigned int>::const_iterator it = container.begin(); it != container.end(); ++it) {
 			std::cout << *it << ' ';
 		}
-		long int	 start_time = getTime();
 		std::cout << std::endl;
+		std::cout << "\nTime to fill a range of " << container.size() << " elements with std::vector: " << process_time << " usec" << std::endl;
+		start_time = getTime();
 		if (!fordJohnson::runAlgo(container))
 			return (1);
-		long int	process_time = getTime() - start_time;
-		std::cout << "After:\t";
+		process_time = getTime() - start_time;
+		std::cout << "\nAfter:\t";
 		for (std::vector<unsigned int>::const_iterator it = container.begin(); it != container.end(); ++it) {
 			std::cout << *it << ' ';
 		}
 		std::cout << std::endl;
-		std::cout << "Time to process a range of " << container.size() << " elements with std::vector: " << process_time << " usec" << std::endl;
+		std::cout << "\nTime to process a range of " << container.size() << " elements with std::vector: " << process_time << " usec" << std::endl;
 		std::cout << "Comparaisons made: " << fordJohnson::g_comp << std::endl;
-		std::cout << "\n---------------------------------" << std::endl;
+		std::vector<unsigned int>::const_iterator	cit = container.begin();
+		unsigned int prev = *cit;
+		while (cit != container.end()) {
+			if (prev > *cit)
+				break ;
+			prev = *cit;
+			cit++;
+		}
+		if (cit == container.end())
+			std::cout << "Container is ordered." << std::endl;
+		else
+			std::cerr << "Error: container isn't ordered." << std::endl;
+
+		std::cout << "---------------------------------" << std::endl;
 	}
 	return (0);
 }

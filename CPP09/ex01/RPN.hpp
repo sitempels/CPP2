@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 16:56:15 by stempels          #+#    #+#             */
-/*   Updated: 2026/01/16 16:58:15 by stempels         ###   ########.fr       */
+/*   Updated: 2026/02/09 10:58:08 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ class	RPN {
 		bool	resolve(const char* input) ;
 
 	/*Getters*/
-	std::stack<int>	getStack() const;
+	std::stack<double>	getStack() const;
 
 	private:
 	/*Private Attributes*/
-		std::stack<int>	stack;
+		std::stack<double>	stack;
 	/*Private Methods*/
 		bool	isValidEndState(const std::stringstream& stream);
 };
 
-std::ostream&	operator<<(std::ostream& ostream, std::stack<int> stack_copy) ;
+std::ostream&	operator<<(std::ostream& ostream, std::stack<double> stack_copy) ;
 
 #endif

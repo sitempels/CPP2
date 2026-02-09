@@ -34,9 +34,9 @@ bool	RPN::resolve(const char* input) {
 			return (false);
 		}
 		else {
-			int	num_2 = stack.top();
+			double	num_2 = stack.top();
 			stack.pop();
-			int num_1 = stack.top();
+			double	num_1 = stack.top();
 			stack.pop();
 			switch (ope) {
 				case ('+'):
@@ -73,11 +73,11 @@ bool	RPN::isValidEndState(const std::stringstream& stream) {
 }
 
 /*Getter*/
-std::stack<int>	RPN::getStack() const {
+std::stack<double>	RPN::getStack() const {
 	return (stack);
 }
 
-std::ostream&	operator<<(std::ostream& ostream, std::stack<int> stack_copy) {
+std::ostream&	operator<<(std::ostream& ostream, std::stack<double> stack_copy) {
 	while (!stack_copy.empty()) {
 		ostream << stack_copy.top();
 		stack_copy.pop();
