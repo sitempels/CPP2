@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 09:50:36 by stempels          #+#    #+#             */
-/*   Updated: 2026/02/09 14:49:25 by stempels         ###   ########.fr       */
+/*   Updated: 2026/02/09 14:53:51 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	main(int argc, char** argv) {
 		else
 			std::cerr << "Error: container isn't ordered." << std::endl;
 
-	//	std::cout << "---------------------------------" << std::endl;
 	}
 	fordJohnson::g_comp = 0;
 	{

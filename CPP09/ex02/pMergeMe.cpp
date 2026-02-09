@@ -71,7 +71,6 @@ bool	fordJohnson::runAlgo(std::vector<unsigned int>& container, unsigned int	ite
 		//Sort with bigest pair as comparative value
 		container = sortPair(container, elem_size);
 		if (!runAlgo(container, iteration)) {
-			//error message ?
 			container.clear();
 			return (false);
 		}
@@ -131,7 +130,6 @@ bool	fordJohnson::runAlgo(std::deque<unsigned int>& container, unsigned int	iter
 		//Sort with bigest pair as comparative value
 		container = sortPair(container, elem_size);
 		if (!runAlgo(container, iteration)) {
-			//error message ?
 			container.clear();
 			return (false);
 		}
