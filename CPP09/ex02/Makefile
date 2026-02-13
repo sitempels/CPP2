@@ -6,7 +6,7 @@
 #    By: user <user@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 10:47:36 by stempels          #+#    #+#              #
-#    Updated: 2026/01/16 17:12:40 by stempels         ###   ########.fr        #
+#    Updated: 2026/02/13 14:42:52 by stempels         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #
@@ -16,7 +16,7 @@ debug: NAME = $(addprefix debug_, $(NAME_PROJECT))
 TYPE = EXEC
 #----------------------------COMPILER------------------------------------------#
 CXX = c++
-debug: CXX = g++ 
+debug: CXX = g++ -fno-inline 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 debug: CXXFLAGS = -g3 -D_GLIBCXX_DEBUG
 CPPFLAGS = $(INC_FLAG)

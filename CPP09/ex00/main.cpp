@@ -7,19 +7,22 @@ int	main(int argc, char **argv) {
 	}
 	BitcoinExchange	market;
 
-	std::cout << "\nTry without loading a database\n" << std::endl;
+/* 
+	//Error testing on database usage
+	std::cout << "\nNo loaded database test\n" << std::endl;
 	market.execute(argv[1]);
 
-	std::cout << "\nTry with a faulty database loaded\n" << std::endl;
+	std::cout << "\nFaulty database loaded\n" << std::endl;
 	try {
-		market.loadDatabase("data2.csv");
+		market.loadDatabase("faulty_database.csv");
 		market.execute(argv[1]);	
 	}
 	catch (const std::exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
+*/
 
-	std::cout << "\nTry with a database loaded\n" << std::endl;
+	std::cout << "\nCorrect and loaded database\n" << std::endl;
 	try {
 		market.loadDatabase("data.csv");
 		market.execute(argv[1]);	

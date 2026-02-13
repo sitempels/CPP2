@@ -9,21 +9,47 @@ namespace fordJohnson {
 }
 
 bool	fordJohnson::isValidInput(char** argv) {
-	if (!argv[1] && !argv[1][0])
+	if (!argv[1] || !argv[1][0])
 		return (false);
 	int	i = 1;
 	while (argv[i]) {
-		int j = 0;
-		while (argv[i][j]) {
-			if (!std::isdigit(argv[i][j]) && !(argv[i][j] == ' '))
+		std::stringstream	stream(argv[i]);
+		long	digit = 0;
+		while (stream >> digit) {
+			if (digit < 0 || digit > INT_MAX)
 				return (false);
-			j++;
 		}
+		if ((stream.fail() && !stream.eof())
+			|| (digit > INT_MAX || digit < 0))
+			return (false);
 		i++;
 	}
 	return (true);
 }
 
+/*
+bool fordJohnson::isValidInput(char** argv) {
+    if (!argv)
+        return false;
+
+	int i = 1; //skip program name
+    while (argv[i]) {
+
+		int	j = 0;
+        while (argv[i][j])
+        {
+            if (!std::isdigit(argv[i][j])
+				&& !argv[i][j] == ' '
+				&& !argv[i][j] == '+')
+                return false;
+			++j;
+        }
+		++i;
+    }
+
+    return true;
+}
+*/
 std::vector<unsigned int>	fordJohnson::fillVectContainer(char** argv) {
 	std::stringstream	stream;
 	std::vector<unsigned int>	container;

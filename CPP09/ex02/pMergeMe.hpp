@@ -6,6 +6,7 @@
 # include <vector>
 # include <deque>
 # include <algorithm>
+# include <climits>
 
 namespace fordJohnson {
 	typedef struct	s_pair {
@@ -30,9 +31,27 @@ namespace fordJohnson {
 	extern unsigned int g_comp;
 
 	template <typename Iterator, typename T>
-	Iterator lowerBound(Iterator first, Iterator last, const T& value) ;
-}
+	Iterator lowerBound(Iterator first, Iterator last, const T& value) {
+		typedef typename std::iterator_traits<Iterator>::difference_type	diff;
+		
+		diff		count = std::distance(first, last);
+		diff		step;
+		Iterator	it;
 
-# include "pMergeMe.tpp"
+		while (count > 0) {
+			it = first;
+			step = count / 2;
+			std::advance(it, step);
+			if (**it < value) {
+				first = ++it;
+				count -= step + 1;
+				g_comp++;
+			}
+			else
+				count = step;
+		}
+		return (first);
+}
+}
 
 #endif
