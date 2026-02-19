@@ -69,6 +69,10 @@ bool	RPN::isValidEndState(const std::stringstream& stream) {
 		std::cerr << "Error: Excessive number of numbers" << std::endl;
 		return (false);
 	}
+	if (stack.size() == 0) {
+		std::cerr << "Error: empty stack" << std::endl;
+		return (false);
+	}
 	return (true);
 }
 

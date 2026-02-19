@@ -63,9 +63,9 @@ void	BitcoinExchange::loadDatabase(const char* file_name) {
 		sstream >> std::noskipws >> price;
 		if (price == -1)
 			throw (std::runtime_error("Database: Invalid price format"));
-		unsigned int	uint_date = (((date.tm_year * 100) + (date.tm_mon)) * 100) + date.tm_mday;
-		std::pair<std::map<unsigned int, double>::iterator, bool>	check;
-		check = quotes_.insert(std::make_pair(uint_date, price));
+//		unsigned int	uint_date = (((date.tm_year * 100) + (date.tm_mon)) * 100) + date.tm_mday;
+		std::pair<std::map<std::tm, double>::iterator, bool>	check;
+		check = quotes_.insert(std::make_pair(date, price));
 		if (!check.second) {
 			quotes_.clear();
 			throw (std::runtime_error("Database: Duplicate"));
@@ -175,15 +175,15 @@ void	BitcoinExchange::validateValue(const float& value) const {
 }
 
 void	BitcoinExchange::printValue(const std::tm& date, const float& value) const {
-	unsigned int	uint_date = 0;
-	std::map<unsigned int, double>::const_iterator	last = quotes_.end();
-	std::map<unsigned int, double>::const_iterator	target;
+//	unsigned int	uint_date = 0;
+	std::map<std::tm, double>::const_iterator	last = quotes_.end();
+	std::map<std::tm, double>::const_iterator	target;
 
-	uint_date = (((date.tm_year * 100) + (date.tm_mon)) * 100) + date.tm_mday;
+//	uint_date = (((date.tm_year * 100) + (date.tm_mon)) * 100) + date.tm_mday;
 
-	target = quotes_.find(uint_date); 
+	target = quotes_.find(date); 
 	if (target == last) {
-		target = quotes_.upper_bound(uint_date);
+		target = quotes_.upper_bound(date);
 		if (target == quotes_.begin()) {
 			std::cerr << "Input Error: no data available for that date.\n Date precede the first date available." << std::endl;
 			return ;
@@ -195,7 +195,7 @@ void	BitcoinExchange::printValue(const std::tm& date, const float& value) const 
 }
 
 /*Getter*/
-const std::map<unsigned int, double>&	BitcoinExchange::getQuotes() const {
+const std::map<std::tm, double>&	BitcoinExchange::getQuotes() const {
 	return (quotes_);
 }
 
@@ -222,6 +222,22 @@ bool	operator==(const std::tm& lhs, const std::tm& rhs) {
 	if (lhs.tm_year == rhs.tm_year && lhs.tm_mon == rhs.tm_mon && lhs.tm_mday == rhs.tm_mday)	
 		return (true);
 	return (false);
+}
+
+bool	operator<(const std::tm& lhs, const std::tm& rhs) {
+	if (lhs.tm_year < rhs.tm_year)
+		return (true);
+	else if (lhs.tm_year > rhs.tm_year)
+		return (false);
+	if (lhs.tm_mon < rhs.tm_mon)
+		return (true);
+	else if (lhs.tm_mon > rhs.tm_mon)
+		return (false);
+	if (lhs.tm_mday < rhs.tm_mday)	
+		return (true);
+	else if (lhs.tm_mday > rhs.tm_mday)	
+		return (false);
+	return (true);
 }
 
 bool	operator!=(const std::tm& lhs, const std::tm& rhs) {

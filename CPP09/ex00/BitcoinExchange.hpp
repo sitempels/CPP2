@@ -27,11 +27,11 @@ class	BitcoinExchange {
 		void		loadDatabase(const char* file_name) ;
 
 	/*Getter*/
-		const std::map<unsigned int, double>&	getQuotes() const;
+		const std::map<std::tm, double>&	getQuotes() const;
 
 		private:
 		/*Private Attribute*/
-			std::map<unsigned int, double>	quotes_;
+			std::map<std::tm, double>	quotes_;
 
 		/*Private Methods*/
 			void		validateDate(std::tm& date) const;
@@ -41,6 +41,7 @@ class	BitcoinExchange {
 
 std::ostream&	operator<<(std::ostream& ostream, const std::tm& tm) ;
 std::istream&	operator>>(std::istream& istream, std::tm& tm) ;
+bool			operator<(const std::tm& lhs, const std::tm& rhs) ;
 bool			operator==(const std::tm& lhs, const std::tm& rhs) ;
 bool			operator!=(const std::tm&lhs, const std::tm& rhs) ;
 
