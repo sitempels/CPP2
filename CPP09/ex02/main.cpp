@@ -6,7 +6,7 @@
 /*   By: stempels <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 09:50:36 by stempels          #+#    #+#             */
-/*   Updated: 2026/02/09 14:53:51 by stempels         ###   ########.fr       */
+/*   Updated: 2026/02/19 13:56:58 by stempels         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ int	main(int argc, char** argv) {
 	{
 		long int	 start_time = getTime();
 		std::vector<unsigned int>	container = fordJohnson::fillVectContainer(argv);
+		if (container.empty()) {
+			std::cerr << "Error: Empty arguments\n";
+			return (1);
+		}
 		long int	process_time = getTime() - start_time;
 		std::cout << "\nBefore:\t";
 		int i = 0;
