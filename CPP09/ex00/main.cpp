@@ -9,10 +9,10 @@ int	main(int argc, char **argv) {
 
 /* 
 	//Error testing on database usage
-	std::cout << "\nNo loaded database test\n" << std::endl;
+	std::cout << "\n--- No loaded database test ---\n" << std::endl;
 	market.execute(argv[1]);
 
-	std::cout << "\nFaulty database loaded\n" << std::endl;
+	std::cout << "\n--- Faulty database loaded ---\n" << std::endl;
 	try {
 		market.loadDatabase("faulty_database.csv");
 		market.execute(argv[1]);	
@@ -22,7 +22,7 @@ int	main(int argc, char **argv) {
 	}
 */
 
-	std::cout << "\nCorrect and loaded database\n" << std::endl;
+	std::cout << "\n--- Correct and loaded database ---\n" << std::endl;
 	try {
 		market.loadDatabase("data.csv");
 		market.execute(argv[1]);	
